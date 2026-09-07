@@ -187,12 +187,14 @@
 
 ---
 
-# 数据存放位置
+# 你的数据存在哪
+
+训练好的模型、生成的训练文件、人在回路标注都保存在本机：
 
 - **macOS**：`~/Library/Application Support/CropRLDecision/`
-- **Windows**：`%LOCALAPPDATA%\CropRLDecision\`
+- **Windows**：`%APPDATA%\CropRLDecision\`
 
-卸载软件不会删除此目录，你的模型、训练结果与人在回路标注都会保留。
+**卸载或升级软件都不会删除这个目录**，重装后模型和训练结果仍在。需要备份或换机器时，整个目录拷走即可。
 
 ---
 
