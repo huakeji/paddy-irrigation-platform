@@ -151,21 +151,53 @@
 
 # 下载安装
 
-到 [**Releases**](../../releases/latest) 页下载。
+到 [**Releases**](../../releases/latest) 页下载对应系统的安装包。
 
-| 平台 | 文件 |
-|---|---|
-| macOS (Apple Silicon) | `CropRLDecision-macOS-arm64.zip` |
-| Windows x64 · 安装版 | `CropRLDecision-Setup.exe` |
-| Windows x64 · 免安装 | `CropRLDecision-Windows-x64.zip` |
+| 系统 | 文件 | 说明 |
+|---|---|---|
+| macOS (Apple Silicon) | `CropRLDecision-macOS-arm64.zip` | 解压后打开 `智灌珈田.app` |
+| Windows x64 | `CropRLDecision-Setup.exe` | 双击安装（**推荐**），自动创建桌面与开始菜单快捷方式 |
+| Windows x64 | `CropRLDecision-Windows-x64.zip` | 免安装，解压后运行 `CropRLDecision.exe` |
 
-**macOS 首次打开**：软件未经 Apple 公证，请**右键点图标 → 打开**，在弹窗中再点一次「打开」。直接双击会被系统拦下。
+## 首次打开被系统拦下？属正常现象
 
-**Windows 白屏**：缺 Microsoft Edge WebView2 运行时，到微软官网搜索 "WebView2 Runtime" 安装即可。
+本软件为科研非商业软件，未购买苹果 / 微软的代码签名，**首次打开会被系统拦一下，放行一次即可**，之后不再提示。
 
-**登录失败**：多与本机 VPN / 代理有关，可临时关闭代理后重试。
+### macOS
 
-首次启动需约 20 秒准备本地数据库。在软件内注册账号即可使用，无需自行配置任何密钥；忘记密码可通过邮箱找回。
+双击 `智灌珈田.app`，若提示「未打开"智灌珈田"，Apple 无法验证是否包含恶意软件」：
+
+打开 **系统设置 → 隐私与安全性**，滚动到底部找到关于"智灌珈田"的提示，点 **「仍要打开」**，在弹窗里再点一次 **「打开」**。
+
+> 旧版 macOS 也可直接在 `智灌珈田.app` 上**右键 →「打开」→ 弹窗里点「打开」**。
+
+### Windows
+
+**用安装版 `CropRLDecision-Setup.exe` 不受下面的问题影响，推荐优先选它。**
+
+若用 `…-Windows-x64.zip` 免安装版，从网上下载的压缩包会被系统标记为"来自网络"，可能导致程序无法启动。
+
+**推荐做法：解压前**先在下载好的 `.zip` 上**右键 → 属性 → 勾选「解除锁定 (Unblock)」→ 确定**，再解压。
+
+软件启动时也会自动尝试解除该标记。万一仍报 `Failed to resolve Python.Runtime.Loader.Initialize` 之类错误，用 PowerShell 对解压目录执行一次：
+
+```powershell
+Get-ChildItem -Path '解压目录' -Recurse | Unblock-File
+```
+
+或改用安装版。
+
+**Windows 窗口空白**：安装 [Microsoft Edge WebView2 Runtime](https://developer.microsoft.com/microsoft-edge/webview2/) 后重开。SmartScreen 提示时选「更多信息 → 仍要运行」。
+
+---
+
+# 账号
+
+- **注册**：首次使用在登录页点「创建账号」，填邮箱、显示名与密码。注册成功自动登录。
+- **忘记密码**：登录页点「忘记密码？」，输入注册邮箱，系统会把**临时密码发到该邮箱**；用临时密码登录后请在「账户设置 → 修改密码」尽快改掉。
+- **修改密码 / 头像**：在「账户设置」中随时修改。
+
+首次启动需约 20 秒准备本地数据库。**无需自行配置任何密钥或路径。**
 
 ---
 
@@ -195,6 +227,22 @@
 - **Windows**：`%APPDATA%\CropRLDecision\`
 
 **卸载或升级软件都不会删除这个目录**，重装后模型和训练结果仍在。需要备份或换机器时，整个目录拷走即可。
+
+---
+
+# 常见问题
+
+**登录提示「邮箱或密码错误」** — 核对邮箱与密码（区分大小写、注意结尾特殊字符）。忘记密码可用登录页「忘记密码？」找回。
+
+**登录提示 SSL / `UNEXPECTED_EOF` / 连接被关闭 / 超时** — 多为本机 **VPN / 代理**（尤其 TUN、全局、fake-ip 模式）干扰了到服务器的加密连接。请在代理软件里把 `paddy-intelligence.xyz` 设为**直连 (DIRECT)**，或使用本软件时**临时关闭代理**后重试。
+
+**Windows 窗口空白** — 安装 Microsoft Edge WebView2 Runtime 后重开。
+
+**macOS 提示「Apple 无法验证」打不开** / **Windows 报 `Failed to resolve Python.Runtime.Loader.Initialize`** — 均为未签名或下载文件被系统拦截所致，按上方[首次打开](#首次打开被系统拦下属正常现象)放行一次即可。
+
+**智能助手提示次数用完** — 每日有使用额度，次日自动恢复。
+
+**整季评估提示「暂无历史逐日数据」** — 该站点本地没有历史序列。当日灌排决策不受影响；需要整季评估请参见下方[账号与数据权限](#账号与数据权限)。
 
 ---
 
